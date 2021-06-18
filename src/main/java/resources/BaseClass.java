@@ -16,10 +16,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 public class BaseClass {
-    WebDriver _driver;
-    public void initialiseDriver() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        String path = "user.home"+"/resource/data.properties";
-        Properties prop = new Properties();
+    public WebDriver _driver;
+    public Properties prop;
+    public WebDriver initialiseDriver() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
+        String path = System.getProperty("user.dir")+"/src/main/java/resources/data.properties";
+        prop = new Properties();
         FileInputStream file = new FileInputStream(path);
         prop.load(file);
         if(prop.getProperty("browser").equalsIgnoreCase("chrome")){
@@ -37,6 +38,8 @@ public class BaseClass {
             _driver = (WebDriver) safariClass.getDeclaredConstructor().newInstance();
         }
 
+        return _driver;
+
     }
 
 
@@ -45,7 +48,7 @@ public class BaseClass {
     {
         TakesScreenshot ts=(TakesScreenshot) driver;
         File source =ts.getScreenshotAs(OutputType.FILE);
-        String destinationFile = System.getProperty("user.home")+"/reports/"+testCaseName+".png";
+        String destinationFile = System.getProperty("user.dir")+"/reports/"+testCaseName+".png";
         FileUtils.copyFile(source,new File(destinationFile));
         return destinationFile;
 
