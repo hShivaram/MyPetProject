@@ -39,6 +39,8 @@ public class LoginTest extends BaseClass {
         log.info("Successfully click on submit for new application");
         ut.waitforElement(_driver,hm.getFirst_name());
         ut.sendKeys(hm.getFirst_name(), prop.getProperty("firstname"));
+        ut.waitforElement(_driver,hm.getLast_name());
+        ut.sendKeys(hm.getFirst_name(), prop.getProperty("lastname"));
     }
 
     @AfterTest
